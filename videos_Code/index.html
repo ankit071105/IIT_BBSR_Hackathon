@@ -1,0 +1,580 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>The Fusion Canvas - Dynamic Portfolio</title>
+    <!-- Load Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Load Lucide Icons -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+
+     <!-- Google fonts  -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap" rel="stylesheet">
+  
+     <!-- Linking file of css  -->
+
+    <link rel="stylesheet" href="style.css">
+
+    <!-- Tailwind CSS  -->
+    <script>
+
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        'page-bg': 'var(--color-bg)',
+                        'page-text': 'var(--color-text)',
+                        'card-bg': 'var(--color-card)',
+                        'primary': 'var(--color-primary)',
+                    },
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                    },
+                    boxShadow: {
+                        'glow-primary': '0 0 20px rgba(255, 127, 80, 0.5)',
+                        'card-lift': '0 10px 30px rgba(0, 0, 0, 0.15)',
+                    }
+                },
+            },
+        }
+    </script>
+
+
+        <link rel="shortcut icon" href="https://imgs.search.brave.com/hIytV6ldlPbqUhtsaoQUOdRvGrpitljgEKPRYHwGepE/rs:fit:500:0:1:0/g:ce/aHR0cHM6Ly9hc3Nl/dHMuY2RuLXNob3Au/Y29tL215LXBpY3R1/cmUyLWNvLXVrL2Fz/c2V0cy9pbWcvcHJv/ZHVjdHMvcGhvdG9z/LWNhbnZhcy13aXRo/LXdvb2Rlbi1mcmFt/ZS0yY20tNDMwNGJh/YzAzNy53ZWJw" type="image/x-icon">
+
+
+</head>
+<body class="bg-page text-page-text transition-colors duration-500">
+
+
+    <div id="loader-overlay">
+        <div class="flex">
+            <div class="dot"></div>
+            <div class="dot"></div>
+            <div class="dot"></div>
+        </div>
+        <span class="absolute bottom-10 text-xs text-main opacity-50">Loading Dynamic Assets...</span>
+    </div>
+
+
+    <div id="liquid-spotlight" style="transform: translate(-50%, -50%);"></div>
+
+
+    <div class="progress-bar" id="progress-bar"></div>
+
+
+    <div class="back-to-top" id="back-to-top">
+        <i data-lucide="arrow-up" class="w-6 h-6"></i>
+    </div>
+
+
+    <div id="main-content" class="opacity-0 transition-opacity duration-1000">
+
+        <header class="sticky top-0 z-40 w-full bg-page bg-opacity-95 backdrop-blur-sm border-b border-card-bg transition-colors duration-500">
+            <nav class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex justify-between items-center h-16">
+                <div class="text-2xl font-black text-primary">Fusion.<span class="text-main/50">X</span></div>
+                
+                <div class="hidden md:flex space-x-6">
+                    <a href="#home" class="text-main hover:text-primary transition-colors duration-300">Home</a>
+                    <a href="#features" class="text-main hover:text-primary transition-colors duration-300">Features</a>
+                    <a href="#projects" class="text-main hover:text-primary transition-colors duration-300">Projects</a>
+                    <a href="#testimonials" class="text-main hover:text-primary transition-colors duration-300">Testimonials</a>
+                    <a href="#pricing" class="text-main hover:text-primary transition-colors duration-300">Pricing</a>
+                </div>
+                
+                <div class="flex space-x-4">
+                    <button id="theme-toggle" class="p-2 rounded-full hover:bg-card-bg transition-all duration-300 theme-toggle">
+                        <i data-lucide="moon" id="moon-icon" class="w-6 h-6 text-main"></i>
+                        <i data-lucide="sun" id="sun-icon" class="w-6 h-6 text-main hidden"></i>
+                    </button>
+                    
+
+                    <button id="mobile-menu-button" class="md:hidden p-2 rounded-full hover:bg-card-bg transition-all duration-300">
+                        <i data-lucide="menu" class="w-6 h-6 text-main"></i>
+                    </button>
+                    
+                    <a href="#contact" class="px-4 py-2 bg-primary text-white rounded-full font-semibold shadow-lg hover:shadow-glow-primary transition-all duration-300 transform hover:scale-105">Get Started</a>
+                </div>
+            </nav>
+            
+
+            <div id="mobile-menu" class="mobile-menu md:hidden fixed top-16 right-0 w-64 h-screen bg-page border-l border-card-bg p-6">
+                <div class="flex flex-col space-y-4">
+                    <a href="#home" class="text-main hover:text-primary transition-colors duration-300 py-2">Home</a>
+                    <a href="#features" class="text-main hover:text-primary transition-colors duration-300 py-2">Features</a>
+                    <a href="#projects" class="text-main hover:text-primary transition-colors duration-300 py-2">Projects</a>
+                    <a href="#testimonials" class="text-main hover:text-primary transition-colors duration-300 py-2">Testimonials</a>
+                    <a href="#pricing" class="text-main hover:text-primary transition-colors duration-300 py-2">Pricing</a>
+                </div>
+            </div>
+        </header>
+
+        <main>
+            <!-- A. HERO SECTION  -->
+            <section id="home" class="min-h-[90vh] flex flex-col justify-center items-center py-20 px-4 relative overflow-hidden">
+                <div class="max-w-6xl mx-auto text-center z-20 scroll-reveal" data-delay="0">
+                    <h1 class="text-4xl sm:text-6xl md:text-8xl font-extrabold mb-6 leading-tight">
+                        <span class="block text-primary typewriter">Accelerate</span> Growth with
+                        <span class="text-page-text block sm:inline text-shimmer">Intelligent Design.</span>
+                    </h1>
+                    <p class="text-lg sm:text-xl text-page-text opacity-80 mb-10 max-w-3xl mx-auto scroll-reveal" data-delay="100">
+                        Crafting reports, forecasts, dashboards & consolidations with AI-insights, just like the video.
+                    </p>
+                    <div class="flex flex-col sm:flex-row justify-center space-y-4 sm:space-y-0 sm:space-x-4 mb-16 scroll-reveal" data-delay="200">
+                        <button class="px-8 py-3 bg-primary text-white rounded-full text-lg font-bold shadow-xl shadow-primary/50 hover:shadow-primary/80 transition-all duration-300 transform hover:scale-105 btn-magnetic">
+                            Start 14-day free trial
+                        </button>
+                        <button id="play-reel-btn" class="px-8 py-3 border border-primary text-primary rounded-full text-lg font-semibold hover:bg-primary/10 transition-all duration-300 transform hover:scale-105 btn-magnetic">
+                            <i data-lucide="play" class="inline w-5 h-5 mr-2"></i> Play Reel
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Stats Section -->
+                <div class="max-w-6xl mx-auto grid grid-cols-2 md:grid-cols-4 gap-8 mt-10 scroll-reveal" data-delay="300">
+                    <div class="text-center">
+                        <div class="counter" data-target="150">0</div>
+                        <p class="text-sm opacity-70 mt-2">Projects Completed</p>
+                    </div>
+                    <div class="text-center">
+                        <div class="counter" data-target="98">0</div>
+                        <p class="text-sm opacity-70 mt-2">Client Satisfaction</p>
+                    </div>
+                    <div class="text-center">
+                        <div class="counter" data-target="12">0</div>
+                        <p class="text-sm opacity-70 mt-2">Years Experience</p>
+                    </div>
+                    <div class="text-center">
+                        <div class="counter" data-target="24">0</div>
+                        <p class="text-sm opacity-70 mt-2">Awards Won</p>
+                    </div>
+                </div>
+
+                <!-- Floating UI Cards  -->
+                <div class="relative w-full h-[400px] mt-10 z-10 hidden md:block">
+                    <div class="absolute bg-card-bg p-4 rounded-xl shadow-card-lift w-64 floating-card card-3d" style="top: 10%; left: 10%; animation-delay: 0s;">
+                        <div class="text-xs text-page-text opacity-60 mb-2">Total Income</div>
+                        <div class="text-2xl font-bold text-primary">$426.8K <span class="text-green-500 text-sm font-normal">↑ 36.5%</span></div>
+                        <div class="h-16 bg-primary/10 rounded-lg mt-2"></div>
+                    </div>
+                    <div class="absolute bg-card-bg p-4 rounded-xl shadow-card-lift w-56 floating-card card-3d" style="bottom: 5%; right: 15%; animation-delay: 2s;">
+                        <div class="text-xs text-page-text opacity-60 mb-2">Cash Flow</div>
+                        <div class="text-4xl font-extrabold">$288,721</div>
+                        <div class="text-xs text-page-text opacity-60 mt-2">90% Financial Health Score</div>
+                    </div>
+                    <div class="absolute bg-card-bg p-4 rounded-xl shadow-card-lift w-48 floating-card card-3d" style="top: 25%; right: 5%; animation-delay: 4s;">
+                        <div class="text-xs text-page-text opacity-60">Expenses $56.2K</div>
+                        <div class="w-full h-32 flex justify-center items-center">
+                            <i data-lucide="pie-chart" class="w-12 h-12 text-primary"></i>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- B. PARALLAX SECTION  -->
+            <section class="parallax-bg bg-fixed" id="parallax-section">
+                <div class="parallax-overlay" id="parallax-overlay"></div>
+                <div class="parallax-fg scroll-reveal" data-delay="0">
+                    Unlocking Deeper <span class="text-primary text-gradient">Connection</span>.
+                    <p class="text-lg font-normal mt-4 max-w-2xl mx-auto opacity-80">
+                        Experience space and quality time like never before with true depth perception.
+                    </p>
+                    <a href="#" class="mt-6 inline-flex items-center text-lg font-semibold text-white bg-primary px-6 py-2 rounded-full hover:bg-opacity-90 transition-all duration-300 transform hover:scale-105 btn-magnetic scroll-reveal" data-delay="200">
+                        Learn more about connection
+                    </a>
+                </div>
+                
+            </section>
+
+            <!-- C. TABBED FEATURES SECTION  -->
+            <section id="features" class="py-20 px-4 bg-card-light dark:bg-card-dark transition-colors duration-500">
+                <div class="max-w-7xl mx-auto scroll-reveal text-center mb-12" data-delay="0">
+                    <h2 class="text-4xl sm:text-5xl font-extrabold text-page-text">Unparalleled BSS/OSS Capabilities</h2>
+                    <p class="text-lg sm:text-xl mt-4 opacity-70">Efficiency, scalability, and agility.</p>
+                </div>
+
+                <div class="max-w-7xl mx-auto scroll-reveal" data-delay="100">
+                    <!-- Tabs Navigation -->
+                    <div class="flex flex-col sm:flex-row justify-center space-y-2 sm:space-y-0 sm:space-x-1 p-2 bg-page rounded-full shadow-lg max-w-3xl mx-auto mb-10 border border-primary/20">
+                        <button class="feature-tab group active bg-primary/20 text-primary" data-tab="billing" data-delay="200">
+                            <i data-lucide="receipt" class="w-5 h-5 mr-2"></i> Billing
+                        </button>
+                        <button class="feature-tab group" data-tab="charging" data-delay="300">
+                            <i data-lucide="lightning-charge" class="w-5 h-5 mr-2"></i> Charging
+                        </button>
+                        <button class="feature-tab group" data-tab="catalog" data-delay="400">
+                            <i data-lucide="layers" class="w-5 h-5 mr-2"></i> Catalog
+                        </button>
+                        <button class="feature-tab group" data-tab="events" data-delay="500">
+                            <i data-lucide="calendar" class="w-5 h-5 mr-2"></i> Events
+                        </button>
+                    </div>
+
+                    <!-- Tabs Content -->
+                    <div id="tab-content" class="p-6 md:p-10 bg-card-bg rounded-2xl shadow-xl border border-primary/10 min-h-[400px]">
+                        <div id="content-billing" class="feature-content active flex flex-col md:flex-row items-center space-y-8 md:space-y-0 md:space-x-12 transition-all duration-500">
+                            <div class="md:w-1/2 text-left">
+                                <h3 class="text-2xl sm:text-3xl font-bold mb-4 text-primary">Real-Time Convergent Billing</h3>
+                                <p class="text-page-text opacity-80 text-lg">
+                                    Instantaneous, accurate billing across all services and payment methods. Our integrated EMS ensures zero latency.
+                                </p>
+                                <ul class="list-disc list-inside mt-4 space-y-2 text-page-text opacity-80">
+                                    <li>Automated invoice generation.</li>
+                                    <li>Multi-currency and multi-language support.</li>
+                                    <li>Granular usage tracking.</li>
+                                </ul>
+                            </div>
+                            <div class="md:w-1/2 relative p-4 bg-primary/10 rounded-xl shadow-lg card-3d">
+                                <img src="https://images.unsplash.com/photo-1551288049-bebda4e38f71?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80" alt="Billing Dashboard" class="w-full h-auto rounded-lg zoom-image">
+                            </div>
+                        </div>
+                        <div id="content-charging" class="feature-content hidden flex-col md:flex-row items-center space-y-8 md:space-y-0 md:space-x-12 transition-all duration-500">
+                             <div class="md:w-1/2 text-left">
+                                <h3 class="text-2xl sm:text-3xl font-bold mb-4 text-primary">Online Charging System</h3>
+                                <p class="text-page-text opacity-80 text-lg">
+                                    AI-powered insights that predict customer needs and drive personalized experiences. Real-time session control and rating.
+                                </p>
+                                <ul class="list-disc list-inside mt-4 space-y-2 text-page-text opacity-80">
+                                    <li>Flexible pricing models.</li>
+                                    <li>Pre-paid and post-paid management.</li>
+                                    <li>Usage control for service limits.</li>
+                                </ul>
+                            </div>
+                            <div class="md:w-1/2 relative p-4 bg-primary/10 rounded-xl shadow-lg card-3d">
+                                <img src="https://images.unsplash.com/photo-1551288049-bebda4e38f71?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80" alt="Charging Interface" class="w-full h-auto rounded-lg zoom-image">
+                            </div>
+                        </div>
+                        <div id="content-catalog" class="feature-content hidden flex-col md:flex-row items-center space-y-8 md:space-y-0 md:space-x-12 transition-all duration-500">
+                            <div class="md:w-1/2 text-left">
+                                <h3 class="text-2xl sm:text-3xl font-bold mb-4 text-primary">Product Catalog</h3>
+                                <p class="text-page-text opacity-80 text-lg">
+                                    Intuitive tools that empower customers to manage their accounts with ease, freeing up your team. Unified product creation.
+                                </p>
+                                <ul class="list-disc list-inside mt-4 space-y-2 text-page-text opacity-80">
+                                    <li>Version control for products.</li>
+                                    <li>Bundling and promotion management.</li>
+                                    <li>Easy integration with other systems.</li>
+                                </ul>
+                            </div>
+                            <div class="md:w-1/2 relative p-4 bg-primary/10 rounded-xl shadow-lg card-3d">
+                                <img src="https://images.unsplash.com/photo-1551288049-bebda4e38f71?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80" alt="Product Catalog View" class="w-full h-auto rounded-lg zoom-image">
+                            </div>
+                        </div>
+                        <div id="content-events" class="feature-content hidden flex-col md:flex-row items-center space-y-8 md:space-y-0 md:space-x-12 transition-all duration-500">
+                            <div class="md:w-1/2 text-left">
+                                <h3 class="text-2xl sm:text-3xl font-bold mb-4 text-primary">Event Processing System</h3>
+                                <p class="text-page-text opacity-80 text-lg">
+                                    Real-time event capture and processing for immediate action, personalization, and service delivery.
+                                </p>
+                                <ul class="list-disc list-inside mt-4 space-y-2 text-page-text opacity-80">
+                                    <li>High-throughput event stream processing.</li>
+                                    <li>Customizable rule engine for triggers.</li>
+                                    <li>Audit logging and compliance.</li>
+                                </ul>
+                            </div>
+                            <div class="md:w-1/2 relative p-4 bg-primary/10 rounded-xl shadow-lg card-3d">
+                                <img src="https://images.unsplash.com/photo-1551288049-bebda4e38f71?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80" alt="Event Timeline" class="w-full h-auto rounded-lg zoom-image">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- D. SHOWCASE WORK  -->
+            <section id="projects" class="py-20 px-4">
+                <div class="max-w-7xl mx-auto scroll-reveal mb-12" data-delay="0">
+                    <h2 class="text-4xl sm:text-5xl font-extrabold text-page-text text-center">Our Latest Projects</h2>
+                    <p class="text-xl mt-4 opacity-70 text-center">A peek into our striking work across the globe.</p>
+                </div>
+
+                <div class="max-w-7xl mx-auto space-y-16">
+                    <!-- Showcase Item 1 -->
+                    <div class="relative flex flex-col md:flex-row items-center overflow-hidden showcase-item scroll-reveal" data-delay="100">
+                        <span class="showcase-num top-0 left-0 md:-left-10 transform -translate-y-1/4">01</span>
+                        <div class="md:w-1/2 z-10 p-6 md:p-10">
+                            <p class="text-lg font-medium text-primary mb-2">Kick Off Event</p>
+                            <h3 class="text-3xl md:text-5xl font-extrabold mb-4">SWITCH - SOPRA STERIA</h3>
+                            <div class="flex space-x-2 mb-6">
+                                <span class="text-xs font-semibold px-3 py-1 bg-primary/10 text-primary rounded-full">NORWAY</span>
+                                <span class="text-xs font-semibold px-3 py-1 bg-primary/10 text-primary rounded-full">B2E EVENT</span>
+                            </div>
+                            <a href="#" class="inline-flex items-center text-lg font-semibold text-primary group transition-all duration-300">
+                                Read More <i data-lucide="arrow-right" class="w-5 h-5 ml-2 group-hover:translate-x-1 transition-transform"></i>
+                            </a>
+                        </div>
+                        <div class="md:w-1/2 h-full z-10 card-3d">
+                             <img src="https://images.unsplash.com/photo-1540575467063-178a50c2df87?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80" alt="Project 1" class="w-full h-full object-cover rounded-xl shadow-card-lift hover:scale-[1.02] transition-transform duration-500 zoom-image">
+                        </div>
+                    </div>
+
+                    <!-- Showcase Item 2 -->
+                    <div class="relative flex flex-col-reverse md:flex-row items-center overflow-hidden showcase-item scroll-reveal" data-delay="300">
+                        <span class="showcase-num top-0 right-0 md:-right-10 transform -translate-y-1/4">02</span>
+                        <div class="md:w-1/2 h-full z-10 card-3d">
+                             <img src="https://images.unsplash.com/photo-1492684223066-81342ee5ff30?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80" alt="Project 2" class="w-full h-full object-cover rounded-xl shadow-card-lift hover:scale-[1.02] transition-transform duration-500 zoom-image">
+                        </div>
+                        <div class="md:w-1/2 z-10 p-6 md:p-10 text-left md:text-right">
+                            <p class="text-lg font-medium text-primary mb-2">Anniversary Celebration</p>
+                            <h3 class="text-3xl md:text-5xl font-extrabold mb-4">GRAND HOTEL OSLO 150 YEARS</h3>
+                            <div class="flex justify-start md:justify-end space-x-2 mb-6">
+                                <span class="text-xs font-semibold px-3 py-1 bg-primary/10 text-primary rounded-full">INTERNATIONAL</span>
+                                <span class="text-xs font-semibold px-3 py-1 bg-primary/10 text-primary rounded-full">BRAND ACTIVATION</span>
+                            </div>
+                            <a href="#" class="inline-flex items-center text-lg font-semibold text-primary group transition-all duration-300">
+                                Read More <i data-lucide="arrow-right" class="w-5 h-5 ml-2 group-hover:translate-x-1 transition-transform"></i>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- E. TESTIMONIALS & PRICING  -->
+            <section id="testimonials" class="py-20 px-4 bg-card-light dark:bg-card-dark transition-colors duration-500">
+                <div class="max-w-7xl mx-auto scroll-reveal mb-12 text-center" data-delay="0">
+                    <p class="text-sm font-semibold uppercase text-primary mb-2 tracking-widest">Customer Testimonials</p>
+                    <h2 class="text-4xl sm:text-5xl font-extrabold text-page-text">Happy Sellers & Partners</h2>
+                    <p class="text-lg mt-4 opacity-70 max-w-2xl mx-auto">
+                        See what our users are saying and choose the plan that fits your growth trajectory.
+                    </p>
+                </div>
+
+                <!-- Testimonials Carousel -->
+                <div class="max-w-7xl mx-auto testimonials-carousel pb-6 scroll-reveal" data-delay="100">
+                    <!-- Card 1 -->
+                    <div class="testimonial-card bg-card-bg p-8 rounded-xl shadow-xl border border-primary/10 transition-all duration-300 hover:shadow-2xl hover:border-primary/50 card-3d" data-delay="200">
+                        <i data-lucide="quote" class="w-8 h-8 text-primary mb-4"></i>
+                        <p class="text-page-text opacity-90 italic mb-6">
+                            "The platform has taken a lot off our plate. The automated feedback system runs quietly in the background, and we've noticed our ratings stay more consistent without needing to chase anything manually."
+                        </p>
+                        <div class="flex items-center">
+                            <img src="https://images.unsplash.com/photo-1494790108755-2616b612b786?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1374&q=80" alt="WatchEm logo" class="w-10 h-10 rounded-full mr-4 object-cover">
+                            <div>
+                                <p class="font-semibold text-page-text">WatchEm - UK Seller</p>
+                                <p class="text-sm opacity-60">E-commerce Automation</p>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Card 2 -->
+                    <div class="testimonial-card bg-card-bg p-8 rounded-xl shadow-xl border border-primary/10 transition-all duration-300 hover:shadow-2xl hover:border-primary/50 card-3d" data-delay="400">
+                        <i data-lucide="quote" class="w-8 h-8 text-primary mb-4"></i>
+                        <p class="text-page-text opacity-90 italic mb-6">
+                            "I run a small Amazon store on the side, and honestly, I don't have time to check performance every day. Amzigo shows me what's happening without needing to dig through reports. I really like how it sends out follow-up requests."
+                        </p>
+                        <div class="flex items-center">
+                            <img src="https://images.unsplash.com/photo-1438761681033-6461ffad8d80?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80" alt="Sophie Wilson" class="w-10 h-10 rounded-full mr-4 object-cover">
+                            <div>
+                                <p class="font-semibold text-page-text">Sophie Wilson</p>
+                                <p class="text-sm opacity-60">USA Store Seller</p>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Card 3 -->
+                    <div class="testimonial-card bg-card-bg p-8 rounded-xl shadow-xl border border-primary/10 transition-all duration-300 hover:shadow-2xl hover:border-primary/50 card-3d" data-delay="600">
+                        <i data-lucide="quote" class="w-8 h-8 text-primary mb-4"></i>
+                        <p class="text-page-text opacity-90 italic mb-6">
+                            "The tools are simple enough for a beginner but powerful once you grow. I didn't even know review requests could be automated until I found them. They just go out on their own, and I can spend more time learning how to improve my store instead of trying to keep up."
+                        </p>
+                        <div class="flex items-center">
+                            <img src="https://images.unsplash.com/photo-1544725176-7c40e5a71c5e?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1467&q=80" alt="Emily James" class="w-10 h-10 rounded-full mr-4 object-cover">
+                            <div>
+                                <p class="font-semibold text-page-text">Emily James</p>
+                                <p class="text-sm opacity-60">US Amazon Seller</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Pricing Section  -->
+                <div id="pricing" class="max-w-7xl mx-auto mt-16 scroll-reveal" data-delay="200">
+                    <div class="text-center mb-10">
+                        <p class="text-3xl font-bold text-page-text">Plans from just <span class="text-primary">$15.99</span> per month.</p>
+                    </div>
+
+                    <div class="grid md:grid-cols-4 gap-6">
+                        <!-- Pricing Card 1 -->
+                        <div class="p-8 rounded-2xl bg-card-bg shadow-xl border border-card-light dark:border-card-dark transition-all duration-300 hover:shadow-primary/20 hover:border-primary/50 text-center card-3d scroll-reveal" data-delay="300">
+                            <p class="text-xs font-bold uppercase text-primary/70 mb-2 tracking-widest">Starter</p>
+                            <h3 class="text-2xl font-extrabold text-page-text mb-1">Up to 500 orders</h3>
+                            <p class="text-sm opacity-60 mb-6">Best for individuals starting out.</p>
+                            <p class="text-4xl font-extrabold text-primary mb-8">$15.99 <span class="text-lg opacity-70 font-normal">/ month</span></p>
+                            <button class="w-full py-3 bg-primary/20 text-primary rounded-lg font-semibold hover:bg-primary/30 transition-colors">Select Plan</button>
+                        </div>
+
+                        <!-- Pricing Card 2  -->
+                        <div class="p-8 rounded-2xl bg-card-bg shadow-2xl border-2 border-primary transition-all duration-500 transform scale-[1.03] text-center relative card-3d scroll-reveal" data-delay="400">
+                            <span class="absolute top-0 right-0 -mt-3 mr-4 px-3 py-1 bg-primary text-white text-xs font-bold rounded-full shadow-lg animate-pulse">MOST POPULAR</span>
+                            <p class="text-xs font-bold uppercase text-white mb-2 tracking-widest bg-primary rounded-full inline-block px-3 py-1">Growth</p>
+                            <h3 class="text-2xl font-extrabold text-page-text mb-1">Up to 2,500 orders</h3>
+                            <p class="text-sm opacity-60 mb-6">Ideal for sellers who are expanding their product range.</p>
+                            <p class="text-4xl font-extrabold text-primary mb-8">$29.99 <span class="text-lg opacity-70 font-normal">/ month</span></p>
+                            <button class="w-full py-3 bg-primary text-white rounded-lg font-semibold shadow-lg shadow-primary/50 hover:shadow-primary/80 transition-all duration-300">Select Plan</button>
+                        </div>
+
+                        <!-- Pricing Card 3 -->
+                        <div class="p-8 rounded-2xl bg-card-bg shadow-xl border border-card-light dark:border-card-dark transition-all duration-300 hover:shadow-primary/20 hover:border-primary/50 text-center card-3d scroll-reveal" data-delay="500">
+                            <p class="text-xs font-bold uppercase text-primary/70 mb-2 tracking-widest">Pro</p>
+                            <h3 class="text-2xl font-extrabold text-page-text mb-1">Up to 10,000 orders</h3>
+                            <p class="text-sm opacity-60 mb-6">Great for professional sellers who need detailed insights.</p>
+                            <p class="text-4xl font-extrabold text-primary mb-8">$59.99 <span class="text-lg opacity-70 font-normal">/ month</span></p>
+                            <button class="w-full py-3 bg-primary/20 text-primary rounded-lg font-semibold hover:bg-primary/30 transition-colors">Select Plan</button>
+                        </div>
+
+                        <!-- Pricing Card 4 -->
+                        <div class="p-8 rounded-2xl bg-card-bg shadow-xl border border-card-light dark:border-card-dark transition-all duration-300 hover:shadow-primary/20 hover:border-primary/50 text-center card-3d scroll-reveal" data-delay="600">
+                            <p class="text-xs font-bold uppercase text-primary/70 mb-2 tracking-widest">Enterprise</p>
+                            <h3 class="text-2xl font-extrabold text-page-text mb-1">30,000+ orders</h3>
+                            <p class="text-sm opacity-60 mb-6">Run a high-volume business with custom automation.</p>
+                            <p class="text-4xl font-extrabold text-primary mb-8">$119.99 <span class="text-lg opacity-70 font-normal">/ month</span></p>
+                            <button class="w-full py-3 bg-primary/20 text-primary rounded-lg font-semibold hover:bg-primary/30 transition-colors">Select Plan</button>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- F. CUSTOMER SECTION  -->
+            <section class="py-20 px-4">
+                <div class="max-w-4xl mx-auto scroll-reveal text-center" data-delay="0">
+                    <h2 class="text-4xl font-extrabold mb-12">Trusted by Industry Leaders</h2>
+
+                    <div id="customer-logos" class="flex justify-center flex-wrap items-center gap-8 transition-opacity duration-700">
+                        <div class="p-2 hover:scale-110 transition-transform duration-300">
+                            <img src="https://images.unsplash.com/photo-1560472354-b33ff0c44a43?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1528&q=80" alt="Brex" class="h-10 opacity-70 hover:opacity-100 transition-opacity dark:invert">
+                        </div>
+                        <div class="p-2 hover:scale-110 transition-transform duration-300">
+                            <img src="https://images.unsplash.com/photo-1560472354-b33ff0c44a43?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1528&q=80" alt="Runway" class="h-10 opacity-70 hover:opacity-100 transition-opacity dark:invert">
+                        </div>
+                        <div class="p-2 hover:scale-110 transition-transform duration-300">
+                            <img src="https://images.unsplash.com/photo-1560472354-b33ff0c44a43?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1528&q=80" alt="Supercell" class="h-10 opacity-70 hover:opacity-100 transition-opacity dark:invert">
+                        </div>
+                        <div class="p-2 hover:scale-110 transition-transform duration-300">
+                            <img src="https://images.unsplash.com/photo-1560472354-b33ff0c44a43?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1528&q=80" alt="Retool" class="h-10 opacity-70 hover:opacity-100 transition-opacity dark:invert">
+                        </div>
+                        <div class="p-2 hover:scale-110 transition-transform duration-300">
+                            <img src="https://images.unsplash.com/photo-1560472354-b33ff0c44a43?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1528&q=80" alt="OpenAI" class="h-10 opacity-70 hover:opacity-100 transition-opacity dark:invert">
+                        </div>
+                        <div class="p-2 hover:scale-110 transition-transform duration-300">
+                            <img src="https://images.unsplash.com/photo-1560472354-b33ff0c44a43?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1528&q=80" alt="Cash App" class="h-10 opacity-70 hover:opacity-100 transition-opacity dark:invert">
+                        </div>
+                    </div>
+
+                    <!-- CTA Button  -->
+                    <div id="customer-cta-container" class="mt-12 scroll-reveal" data-delay="100">
+                        <button id="customer-cta-btn" class="px-6 py-3 bg-primary text-white rounded-full font-semibold transition-all duration-300 opacity-0 transform translate-y-4 hover:shadow-glow-primary">
+                            Meet our customers <i data-lucide="arrow-right" class="inline w-4 h-4 ml-1"></i>
+                        </button>
+                    </div>
+                </div>
+            </section>
+
+            <!-- G. CONTACT SECTION -->
+            <section id="contact" class="py-20 px-4 bg-card-light dark:bg-card-dark transition-colors duration-500">
+                <div class="max-w-4xl mx-auto scroll-reveal text-center" data-delay="0">
+                    <h2 class="text-4xl font-extrabold mb-6">Get In Touch</h2>
+                    <p class="text-lg opacity-70 mb-12 max-w-2xl mx-auto">
+                        Ready to accelerate your growth? Contact us today and let's build something amazing together.
+                    </p>
+
+                    <div class="grid md:grid-cols-2 gap-8 text-left">
+                        <div>
+                            <h3 class="text-xl font-bold mb-4 text-primary">Contact Information</h3>
+                            <div class="space-y-4">
+                                <div class="flex items-center">
+                                    <i data-lucide="mail" class="w-5 h-5 mr-3 text-primary"></i>
+                                    <span>hello@fusioncanvas.com</span>
+                                </div>
+                                <div class="flex items-center">
+                                    <i data-lucide="phone" class="w-5 h-5 mr-3 text-primary"></i>
+                                    <span>+ 90313-58194 </span>
+                                </div>
+                                <div class="flex items-center">
+                                    <i data-lucide="map-pin" class="w-5 h-5 mr-3 text-primary"></i>
+                                    <span>ITER Bhubanswer ,  Odisha</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <form class="space-y-4">
+                            <div class="grid grid-cols-2 gap-4">
+                                <input type="text" placeholder="First Name" class="form-input w-full px-4 py-2 rounded-lg bg-card-bg border border-page-text/20 focus:border-primary focus:outline-none text-page-text">
+                                <input type="text" placeholder="Last Name" class="form-input w-full px-4 py-2 rounded-lg bg-card-bg border border-page-text/20 focus:border-primary focus:outline-none text-page-text">
+                            </div>
+                            <input type="email" placeholder="Email Address" class="form-input w-full px-4 py-2 rounded-lg bg-card-bg border border-page-text/20 focus:border-primary focus:outline-none text-page-text">
+                            <textarea placeholder="Your Message" rows="4" class="form-input w-full px-4 py-2 rounded-lg bg-card-bg border border-page-text/20 focus:border-primary focus:outline-none text-page-text"></textarea>
+                            <button type="submit" class="w-full py-3 bg-primary text-white rounded-lg font-semibold hover:bg-primary/90 transition-all duration-300">
+                                Send Message
+                            </button>
+                        </form>
+                    </div>
+                </div>
+            </section>
+        </main>
+
+        <!-- Footer Section -->
+        <footer class="bg-card-light dark:bg-card-dark py-12 px-4 mt-20 transition-colors duration-500">
+            <div class="max-w-7xl mx-auto grid grid-cols-2 md:grid-cols-4 gap-8">
+                <!-- Col 1: Logo -->
+                <div class="col-span-2 md:col-span-1">
+                    <div class="text-3xl font-black text-primary">Fusion.<span class="text-main/50">X</span></div>
+                    <p class="text-sm opacity-60 mt-2">Intelligent Design. Accelerated Growth.</p>
+                </div>
+
+                <!-- Col 2: Links -->
+                <div>
+                    <h4 class="font-bold mb-3 text-page-text">Quick Links</h4>
+                    <ul class="space-y-2 text-sm opacity-70">
+                        <li><a href="#home" class="hover:text-primary transition-colors">Home</a></li>
+                        <li><a href="#features" class="hover:text-primary transition-colors">Features</a></li>
+                        <li><a href="#projects" class="hover:text-primary transition-colors">Projects</a></li>
+                    </ul>
+                </div>
+
+                <!-- Col 3: Legal -->
+                <div>
+                    <h4 class="font-bold mb-3 text-page-text">Legal</h4>
+                    <ul class="space-y-2 text-sm opacity-70">
+                        <li><a href="#" class="hover:text-primary transition-colors">Privacy Policy</a></li>
+                        <li><a href="#" class="hover:text-primary transition-colors">Terms of Service</a></li>
+                        <li><a href="#" class="hover:text-primary transition-colors">Cookies</a></li>
+                    </ul>
+                </div>
+
+                <!-- Col 4: Newsletter Signup (New Feature) -->
+                <div class="col-span-2 md:col-span-1">
+                    <h4 class="font-bold mb-3 text-page-text">Stay Updated</h4>
+                    <form onsubmit="event.preventDefault(); alert('Subscribed!');" class="flex flex-col space-y-3">
+                        <input type="email" placeholder="Your Email" class="form-input w-full px-4 py-2 rounded-lg bg-card-light dark:bg-card-dark border border-page-text/20 focus:border-primary focus:outline-none text-page-text" required>
+                        <button type="submit" class="w-full py-2 bg-primary text-white rounded-lg font-semibold hover:bg-primary/90 transition-all duration-300">
+                            Subscribe
+                        </button>
+                    </form>
+                </div>
+            </div>
+
+            <div class="max-w-7xl mx-auto text-center opacity-50 text-xs mt-10 border-t pt-6 border-page-text/10">
+                &copy; 2025 The Fusion Canvas. All rights reserved. <br> Design By <span>Ankit</span>
+            </div>
+        </footer>
+
+        <!-- VIDEO MODAL (scroll and pop up.mp4) -->
+        <div id="video-modal" class="fixed inset-0 bg-black bg-opacity-80 z-50 hidden flex justify-center items-center opacity-0 transition-opacity duration-300">
+            <div class="relative w-11/12 max-w-4xl bg-page rounded-xl shadow-2xl p-6">
+                <button id="close-modal-btn" class="absolute top-3 right-3 p-2 rounded-full bg-card-bg text-page-text hover:bg-primary hover:text-white transition-colors">
+                    <i data-lucide="x" class="w-6 h-6"></i>
+                </button>
+                <div class="aspect-video">
+                    <!-- Placeholder for a video player -->
+                    <iframe width="100%" height="100%" src="https://www.youtube.com" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen class="rounded-lg"></iframe>
+                </div>
+                <div class="text-center mt-4">
+                    <p class="text-lg font-semibold text-page-text">Watch Our Full Reel</p>
+                </div>
+            </div>
+        </div>
+
+    </div> 
+
+     <script src="script.js"></script>
+</body>
+</html>
