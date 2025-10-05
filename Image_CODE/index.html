@@ -1,0 +1,331 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <!-- Website Title  -->
+  <title>CarbonTrack Pro Dashboard</title>
+
+   <!-- Tailwindcss -->
+  <script src="https://cdn.tailwindcss.com"></script>
+
+  <!-- Chart  -->
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+
+  <!-- link the css  -->
+  <link rel="stylesheet" href="style.css">
+</head>
+<body class="text-gray-900 bg-gray-50">
+
+  <!-- Welcome Popup -->
+  <div id="welcomePopup" class="fixed inset-0 popup-overlay flex items-center justify-center z-50">
+    <div class="bg-white rounded-2xl p-8 max-w-md w-full mx-4 shadow-2xl">
+      <div class="text-center">
+        <div class="w-16 h-16 bg-[#6b3734] rounded-full flex items-center justify-center mx-auto mb-4">
+          <i class="fa-solid fa-leaf text-white text-2xl"></i>
+        </div>
+        <h2 class="text-2xl font-bold text-gray-800 mb-2">Welcome to CarbonTrack Pro</h2>
+        <p class="text-gray-600 mb-6">Your comprehensive dashboard for tracking and managing carbon emissions across your portfolio.</p>
+        <button id="closePopup" class="bg-[#6b3734] text-white px-6 py-3 rounded-lg font-medium hover:bg-[#5a2c29] transition-colors w-full">Get Started</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Navigation Bar -->
+  <nav class="nav-gradient text-white shadow-lg sticky top-0 z-40">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="flex justify-between h-16">
+        <div class="flex items-center">
+          <div class="flex items-center space-x-2">
+            <div class="w-8 h-8 bg-[#6b3734] rounded-full flex items-center justify-center">
+              <i class="fa-solid fa-leaf text-white"></i>
+            </div>
+            <span class="text-xl font-bold">CarbonTrack Pro</span>
+          </div>
+          <div class="hidden md:ml-10 md:flex md:space-x-8">
+            <a href="#" class="text-white px-3 py-2 rounded-md text-sm font-medium border-b-2 border-[#6b3734]">Dashboard</a>
+            <a href="#" class="text-gray-300 hover:text-white px-3 py-2 rounded-md text-sm font-medium">Analytics</a>
+            <a href="#" class="text-gray-300 hover:text-white px-3 py-2 rounded-md text-sm font-medium">Reports</a>
+            <a href="#" class="text-gray-300 hover:text-white px-3 py-2 rounded-md text-sm font-medium">Settings</a>
+          </div>
+        </div>
+        <div class="flex items-center space-x-4">
+          <button class="bg-[#6b3734] text-white px-4 py-2 rounded-lg text-sm font-medium hover:bg-[#5a2c29] transition-colors">Export Report</button>
+          <div class="relative">
+            <button id="notificationBtn" class="p-2 rounded-full hover:bg-gray-800 transition-colors">
+              <i class="fa-solid fa-bell text-gray-300"></i>
+              <span class="absolute top-0 right-0 bg-red-500 text-white text-xs rounded-full h-5 w-5 flex items-center justify-center">3</span>
+            </button>
+          </div>
+          <div class="flex items-center space-x-2">
+            <div class="w-8 h-8 bg-[#6b3734] rounded-full flex items-center justify-center text-white text-sm font-medium">AK</div>
+            <span class="text-sm hidden md:block">Ankit Kumar</span>
+            <i class="fa-solid fa-chevron-down text-gray-400 text-xs"></i>
+          </div>
+        </div>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Notification Panel (Hidden by default) -->
+  <div id="notificationPanel" class="hidden fixed right-4 top-20 w-80 bg-white shadow-lg rounded-lg z-10 p-4 border border-gray-200">
+    <div class="flex justify-between items-center mb-3">
+      <h3 class="font-semibold text-gray-800">Notifications</h3>
+      <button id="closeNotifications" class="text-gray-500 hover:text-gray-700">
+        <i class="fa-solid fa-xmark"></i>
+      </button>
+    </div>
+    <div class="space-y-3">
+      <div class="p-3 bg-blue-50 rounded-lg border border-blue-100">
+        <p class="text-sm text-gray-800">New sustainability report available for ECorp</p>
+        <span class="text-xs text-gray-500">2 hours ago</span>
+      </div>
+      <div class="p-3 bg-yellow-50 rounded-lg border border-yellow-100">
+        <p class="text-sm text-gray-800">ICorp exceeded carbon budget for Q2</p>
+        <span class="text-xs text-gray-500">1 day ago</span>
+      </div>
+      <div class="p-3 bg-green-50 rounded-lg border border-green-100">
+        <p class="text-sm text-gray-800">The Agency achieved carbon reduction target</p>
+        <span class="text-xs text-gray-500">3 days ago</span>
+      </div>
+    </div>
+    <button class="w-full mt-3 text-center text-sm text-[#6b3734] font-medium py-2 hover:bg-gray-50 rounded-lg">View All Notifications</button>
+  </div>
+
+  <!-- Main Content -->
+  <main class="max-w-7xl mx-auto py-8 px-4 sm:px-6 lg:px-8">
+    
+    <!-- Dashboard Header -->
+    <div class="mb-10">
+      <h1 class="text-3xl font-bold text-gray-900">Carbon Emissions Dashboard</h1>
+      <p class="text-gray-600 mt-2">Monitor and manage your carbon footprint across all business units</p>
+    </div>
+
+    <!-- Card Section -->
+    <section class="max-w-md mx-auto bg-black rounded-2xl p-6 text-white shadow-lg card-hover">
+      <div class="flex justify-between items-center mb-4">
+        <h2 class="text-lg font-semibold">Brand Kits</h2>
+        <button id="addBrandBtn" class="bg-[#6b3734] text-white px-3 py-1 rounded-lg text-sm font-medium hover:bg-[#5a2c29] transition-colors">+ Add Brand</button>
+      </div>
+
+      <!-- Add Brand Form (Hidden by default) -->
+      <div id="addBrandForm" class="hidden mb-4 bg-gray-800 p-4 rounded-xl">
+        <h3 class="text-md font-medium mb-3">Add New Brand</h3>
+        <div class="space-y-3">
+          <input type="text" id="brandName" placeholder="Brand Name" class="w-full bg-gray-700 rounded-lg px-3 py-2 text-white focus:outline-none focus:ring-2 focus:ring-[#6b3734]">
+          <div class="flex items-center space-x-3">
+            <span class="text-sm">Brand Color:</span>
+            <input type="color" id="brandColor" class="w-8 h-8 rounded-full border-0 cursor-pointer" value="#6b3734">
+          </div>
+          <div class="flex justify-end space-x-2">
+            <button id="cancelAddBrand" class="px-3 py-1 bg-gray-600 rounded-lg text-sm hover:bg-gray-700 transition-colors">Cancel</button>
+            <button id="saveBrand" class="px-3 py-1 bg-[#6b3734] rounded-lg text-sm hover:bg-[#5a2c29] transition-colors">Save</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Main Card -->
+      <div class="space-y-4" id="brandList">
+        <!-- First Card -->
+        <div class="flex justify-between items-center bg-gray-800 rounded-xl p-3 hover:bg-gray-750 transition-colors">
+          <div class="flex items-center gap-3">
+            <input type="checkbox" class="accent-teal-500 w-5 h-5">
+            <div class="flex items-center gap-2">
+              <div class="w-4 h-4 bg-teal-500 rounded-full"></div>
+              <span>ECorp</span>
+            </div>
+          </div>
+          <i class="fa-solid fa-sliders text-gray-400 hover:text-white cursor-pointer"></i>
+        </div>
+
+        <!-- Second Card -->
+        <div class="flex justify-between items-center bg-gray-800 rounded-xl p-3 hover:bg-gray-750 transition-colors">
+          <div class="flex items-center gap-3">
+            <input type="checkbox" class="accent-amber-400 w-5 h-5">
+            <div class="flex items-center gap-2">
+              <div class="w-4 h-4 bg-amber-400 rounded-full"></div>
+              <span>ICorp</span>
+            </div>
+          </div>
+          <i class="fa-solid fa-sliders text-gray-400 hover:text-white cursor-pointer"></i>
+        </div>
+
+        <!-- Third Card -->
+        <div class="flex justify-between items-center bg-gray-800 rounded-xl p-3 hover:bg-gray-750 transition-colors">
+          <div class="flex items-center gap-3">
+            <input type="checkbox" checked class="accent-purple-600 w-5 h-5">
+            <div class="flex items-center gap-2">
+              <div class="w-4 h-4 bg-red-500 rounded-full"></div>
+              <span>The Agency</span>
+            </div>
+          </div>
+          <i class="fa-solid fa-sliders text-gray-400 hover:text-white cursor-pointer"></i>
+        </div>
+      </div>
+    </section>
+
+    <!-- Carbon Chart -->
+    <section class="max-w-6xl mx-auto mt-16 px-0">
+      <div class="flex flex-col md:flex-row justify-between items-start md:items-center">
+        <div>
+          <div class="flex gap-3 mb-4">
+            <button class="bg-[#6b3734] text-white px-4 py-2 rounded-full font-medium hover:bg-[#5a2c29] transition-colors">Refurbishment</button>
+            <button class="bg-gray-200 text-gray-700 px-4 py-2 rounded-full font-medium hover:bg-gray-300 transition-colors">New Build</button>
+            <button class="bg-gray-200 text-gray-700 px-4 py-2 rounded-full font-medium hover:bg-gray-300 transition-colors">All</button>
+          </div>
+          <div class="flex gap-3">
+            <button class="bg-[#6b3734] text-white px-4 py-2 rounded-full font-medium hover:bg-[#5a2c29] transition-colors">Complete</button>
+            <button class="bg-gray-200 text-gray-700 px-4 py-2 rounded-full font-medium hover:bg-gray-300 transition-colors">Estimate</button>
+          </div>
+        </div>
+        <div class="mt-6 md:mt-0 text-right">
+          <h2 class="text-4xl font-semibold leading-tight">
+            <span class="text-gray-700">EMBODIED</span><br>
+            <span class="text-[#6b3734]">CARBON EMISSIONS</span>
+          </h2>
+          <p class="text-sm mt-1 text-gray-600">Intensity measured by kgCO₂e/m²</p>
+          <button class="border border-gray-400 rounded-full px-4 py-2 text-sm mt-2 font-medium hover:bg-gray-50 transition-colors">Download the data ↓</button>
+        </div>
+      </div>
+
+      <div class="mt-10 bg-white p-6 rounded-2xl shadow-md card-hover">
+        <canvas id="carbonChart" height="120"></canvas>
+      </div>
+    </section>
+
+    <!-- Portfolio Stats Section -->
+    <section class="max-w-6xl mx-auto mt-16 px-0 mb-20">
+      <div class="grid md:grid-cols-3 gap-8">
+        <!-- Card 1 -->
+        <div class="bg-white p-6 rounded-2xl shadow-md card-hover">
+          <h3 class="text-lg text-gray-600">Managed portfolio carbon footprint</h3>
+          <p class="text-5xl font-semibold mt-3">45,048</p>
+          <p class="text-sm text-[#6b3734] mt-1 font-medium">↑ 16% from 2019</p>
+          <div class="mt-6 space-y-3">
+            <div class="flex justify-between text-sm"><span>2022</span><span>45,048</span></div>
+            <div class="w-full bg-gray-200 rounded-full h-2"><div class="bg-[#6b3734] h-2 rounded-full w-[80%]"></div></div>
+            <div class="flex justify-between text-sm"><span>2021</span><span>14,111</span></div>
+            <div class="w-full bg-gray-200 rounded-full h-2"><div class="bg-[#b58b88] h-2 rounded-full w-[30%]"></div></div>
+          </div>
+        </div>
+
+        <!-- Card 2 -->
+        <div class="bg-white p-6 rounded-2xl shadow-md card-hover">
+          <h3 class="text-lg text-gray-600">Managed portfolio energy intensity</h3>
+          <p class="text-5xl font-semibold mt-3">123</p>
+          <p class="text-sm text-[#6b3734] mt-1 font-medium">↓ 22% from 2019</p>
+          <div class="mt-6 space-y-3">
+            <div class="flex justify-between text-sm"><span>2022</span><span>123</span></div>
+            <div class="w-full bg-gray-200 rounded-full h-2"><div class="bg-[#6b3734] h-2 rounded-full w-[75%]"></div></div>
+            <div class="flex justify-between text-sm"><span>2021</span><span>128</span></div>
+            <div class="w-full bg-gray-200 rounded-full h-2"><div class="bg-[#b58b88] h-2 rounded-full w-[50%]"></div></div>
+          </div>
+        </div>
+
+        <!-- Card 3 -->
+        <div class="bg-white p-6 rounded-2xl shadow-md card-hover">
+          <h3 class="text-lg text-gray-600">Managed portfolio energy consumption</h3>
+          <p class="text-5xl font-semibold mt-3">47,790,662</p>
+          <p class="text-sm text-[#6b3734] mt-1 font-medium">↓ 27% from 2019</p>
+          <div class="mt-6 space-y-3">
+            <div class="flex justify-between text-sm"><span>2022</span><span>47,790,662</span></div>
+            <div class="w-full bg-gray-200 rounded-full h-2"><div class="bg-[#6b3734] h-2 rounded-full w-[80%]"></div></div>
+            <div class="flex justify-between text-sm"><span>2021</span><span>49,324,077</span></div>
+            <div class="w-full bg-gray-200 rounded-full h-2"><div class="bg-[#b58b88] h-2 rounded-full w-[65%]"></div></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- New Features Section -->
+    <section class="max-w-6xl mx-auto mt-16 px-0 mb-20">
+      <h2 class="text-2xl font-bold text-[#6b3734] mb-8">Advanced Analytics</h2>
+      
+      <!-- Carbon Reduction Goals -->
+      <div class="bg-white rounded-2xl shadow-md p-6 mb-10 card-hover">
+        <div class="flex justify-between items-center mb-6">
+          <h3 class="text-xl font-semibold">Carbon Reduction Goals</h3>
+          <button class="bg-[#6b3734] text-white px-4 py-2 rounded-lg text-sm font-medium hover:bg-[#5a2c29] transition-colors">Set New Goal</button>
+        </div>
+        <div class="grid md:grid-cols-2 gap-6">
+          <div class="bg-gray-50 p-4 rounded-lg border border-gray-200">
+            <div class="flex justify-between items-center mb-2">
+              <h4 class="font-medium">2023 Target</h4>
+              <span class="text-sm text-gray-500">65% Complete</span>
+            </div>
+            <div class="w-full bg-gray-200 rounded-full h-3">
+              <div class="bg-green-500 h-3 rounded-full w-3/4"></div>
+            </div>
+            <p class="text-sm text-gray-600 mt-2">Reduce carbon footprint by 15% by end of 2023</p>
+          </div>
+          <div class="bg-gray-50 p-4 rounded-lg border border-gray-200">
+            <div class="flex justify-between items-center mb-2">
+              <h4 class="font-medium">2024 Target</h4>
+              <span class="text-sm text-gray-500">25% Complete</span>
+            </div>
+            <div class="w-full bg-gray-200 rounded-full h-3">
+              <div class="bg-yellow-500 h-3 rounded-full w-1/4"></div>
+            </div>
+            <p class="text-sm text-gray-600 mt-2">Achieve net-zero emissions in all new projects</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Sustainability Scorecard -->
+      <div class="bg-white rounded-2xl shadow-md p-6 card-hover">
+        <h3 class="text-xl font-semibold mb-6">Sustainability Scorecard</h3>
+        <div class="grid md:grid-cols-4 gap-4">
+          <div class="text-center p-4 bg-green-50 rounded-lg border border-green-100">
+            <div class="text-3xl font-bold text-green-600">87</div>
+            <p class="text-sm text-gray-600 mt-1">Overall Score</p>
+          </div>
+          <div class="text-center p-4 bg-blue-50 rounded-lg border border-blue-100">
+            <div class="text-3xl font-bold text-blue-600">92</div>
+            <p class="text-sm text-gray-600 mt-1">Energy Efficiency</p>
+          </div>
+          <div class="text-center p-4 bg-yellow-50 rounded-lg border border-yellow-100">
+            <div class="text-3xl font-bold text-yellow-600">78</div>
+            <p class="text-sm text-gray-600 mt-1">Material Usage</p>
+          </div>
+          <div class="text-center p-4 bg-purple-50 rounded-lg border border-purple-100">
+            <div class="text-3xl font-bold text-purple-600">85</div>
+            <p class="text-sm text-gray-600 mt-1">Waste Management</p>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- Footer -->
+  <footer class="footer-gradient text-white py-8 mt-10">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="flex flex-col md:flex-row justify-between items-center">
+        <div class="flex items-center space-x-2 mb-4 md:mb-0">
+          <div class="w-6 h-6 bg-[#6b3734] rounded-full flex items-center justify-center">
+            <i class="fa-solid fa-leaf text-white text-xs"></i>
+          </div>
+          <span class="text-lg font-bold">CarbonTrack Pro</span>
+        </div>
+        <div class="flex space-x-6 mb-4 md:mb-0">
+          <a href="#" class="text-gray-300 hover:text-white transition-colors">Dashboard</a>
+          <a href="#" class="text-gray-300 hover:text-white transition-colors">Analytics</a>
+          <a href="#" class="text-gray-300 hover:text-white transition-colors">Reports</a>
+          <a href="#" class="text-gray-300 hover:text-white transition-colors">Settings</a>
+        </div>
+        <div class="text-center md:text-right">
+          <p class="text-gray-400 text-sm">© 2023 CarbonTrack Pro. All rights reserved.</p>
+          <p class="text-gray-400 text-sm mt-1">Designed by <span class="text-[#b58b88] font-medium">Ankit</span></p>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Fontawesome For for icons -->
+  <script src="https://kit.fontawesome.com/a2e0e6ad1a.js" crossorigin="anonymous"></script>
+
+  <!-- JavaScript -->
+<script src="script.js"></script>
+</body>
+</html>

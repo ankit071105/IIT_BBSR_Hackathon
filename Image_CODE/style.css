@@ -1,0 +1,26 @@
+    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+    
+    body {
+      font-family: 'Inter', sans-serif;
+    }
+    
+    .nav-gradient {
+      background: linear-gradient(90deg, #1a1a1a 0%, #2d1b1a 100%);
+    }
+    
+    .footer-gradient {
+      background: linear-gradient(90deg, #2d1b1a 0%, #1a1a1a 100%);
+    }
+    
+    .popup-overlay {
+      background-color: rgba(0, 0, 0, 0.7);
+    }
+    
+    .card-hover {
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+    
+    .card-hover:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+    }
